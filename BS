@@ -1,0 +1,46 @@
+package com.google;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class BsTest {
+
+    private static WebDriver driver;
+
+        @Test
+        public void setup() {
+            System.setProperty("webdriver.chrome.driver", "C:\\Users\\vally\\chromedriver.exe");
+            driver = new ChromeDriver();
+            driver.manage().window().maximize();
+            driver.get("https://www.google.com/");
+
+            WebElement search = driver.findElement(By.xpath("//input[@class='gLFyf gsfi']"));
+            search.sendKeys("byndyusoft");
+            search.sendKeys(Keys.ENTER);
+
+            WebElement frstRslt = driver.findElement(By.xpath("//div[@class='g'][1]//h3[@class='LC20lb MBeuO DKV0Md']"));
+            frstRslt.click();
+
+            WebElement callBack = driver.findElement(By.xpath("//div[@class='know-more__container']//span"));
+            callBack.click();
+
+            WebElement telNum = driver.findElement(By.xpath("//div[@class='popup-callback__footer-contacts']//a[contains(text(),'8 800 775-15-21')]"));
+            String telNumCnt = telNum.getAttribute("textContent");
+            String tNum = "8 800 775-15-21";
+            Assert.assertEquals(tNum,telNumCnt);
+
+            WebElement mailName = driver.findElement(By.xpath("//div[@class='popup-callback__footer-contacts']//a[contains(text(),'sales@byndyusoft.com')]"));
+            String mailNameCnt = mailName.getAttribute("textContent");
+            String mNam = "sales@byndyusoft.com";
+            Assert.assertEquals(mNam,mailNameCnt);
+
+            driver.quit();
+
+        }
+
+    }
